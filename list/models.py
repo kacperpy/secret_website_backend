@@ -17,9 +17,10 @@ class Movie(models.Model):
     description_long = models.CharField(
         max_length=2048
     )
-    image = models.CharField(
+    image_url = models.CharField(
         max_length=512
     )
+    image_file = models.ImageField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

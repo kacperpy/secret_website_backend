@@ -14,7 +14,8 @@ class MovieReadSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'description_long',
-            'image',
+            'image_url',
+            'image_file',
             'created_at',
         ]
 
@@ -30,5 +31,5 @@ class MovieCreateSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'description_long',
-            'image'
+            'image_url'
         ]
