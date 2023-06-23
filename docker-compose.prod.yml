@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    command: gunicorn diploma_backend.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn secret_website_backend.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -33,21 +33,10 @@ services:
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
-      - ./nginx/:/etc/nginx/conf.d
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
     ports:
       - 80:80
-      - 443:443
     depends_on:
       - web
-
-  certbot:
-    container_name: certbot
-    image: certbot/certbot
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
 
 volumes:
   postgres_data:
