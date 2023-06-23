@@ -9,12 +9,16 @@ class Movie(models.Model):
         editable=False
     )
     title = models.CharField(
-        max_length=69,
-        unique=True
+        max_length=1028
     )
     description = models.CharField(
-        max_length=69,
-        unique=True
+        max_length=512
+    )
+    description_long = models.CharField(
+        max_length=2048
+    )
+    image = models.CharField(
+        max_length=512
     )
     created_at = models.DateTimeField(auto_now_add=True)
 

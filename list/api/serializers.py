@@ -13,6 +13,8 @@ class MovieReadSerializer(serializers.ModelSerializer):
             'uuid',
             'title',
             'description',
+            'description_long',
+            'image',
             'created_at',
         ]
 
@@ -27,4 +29,6 @@ class MovieCreateSerializer(serializers.ModelSerializer):
         fields = [
             'title',
             'description',
+            'description_long',
+            'image'
         ]
