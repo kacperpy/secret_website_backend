@@ -11,7 +11,7 @@ export const useCreateMovie = () => {
     console.log("CREATING MOVIE...\n");
     axios
       .post(
-        "http://127.0.0.1:8000/api/movies/",
+        "http://46.41.149.244/api/movies/",
         {
           title: movie.title,
           description: movie.description,

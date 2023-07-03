@@ -11,7 +11,7 @@ export const useCreateAuthToken = () => {
     console.log("\nFETCHING AUTH TOKEN...\n");
     axios
       .post(
-        "http://127.0.0.1:8000/api-auth-token/",
+        "http://46.41.149.244/api-auth-token/",
         {
           username: username,
           password: password,
