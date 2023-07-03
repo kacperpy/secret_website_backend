@@ -52,4 +52,5 @@ manage.py
 # example database
 drf_example
 /db.sqlite3
+/mediafiles
 /nginx/secret_website_frontend/src/private/api_data.ts

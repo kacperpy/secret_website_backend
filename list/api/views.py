@@ -13,6 +13,7 @@ from datetime import datetime
 class MovieViewSet(mixins.RetrieveModelMixin,
                    mixins.ListModelMixin,
                    mixins.CreateModelMixin,
+                   mixins.DestroyModelMixin,
                    viewsets.GenericViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieReadSerializer
