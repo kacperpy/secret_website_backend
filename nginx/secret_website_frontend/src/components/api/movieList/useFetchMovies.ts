@@ -20,7 +20,7 @@ export const useFetchMovies = () => {
     setIsLoadingMovies(true);
     console.log("\nFETCHING MOVIES...\n");
     axios
-      .get("http://127.0.0.1:8000/api/movies/", {
+      .get("http://46.41.149.244/api/movies/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("user_auth_token")}`,
