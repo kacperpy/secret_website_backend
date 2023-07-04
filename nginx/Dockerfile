@@ -10,5 +10,6 @@ RUN npm run build
 
 FROM nginx:1.21-alpine
 
+RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
 COPY --from=builder /secret_website_frontend/build /usr/share/nginx/html
