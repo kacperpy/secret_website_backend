@@ -9,11 +9,9 @@ then
     done
 
     echo "PostgreSQL started"
+    python manage.py makemigrations
+    python manage.py migrate --no-input
+    python manage.py collectstatic --no-input
 fi
 
 exec "$@"
-
-python manage.py makemigrations
-python manage.py migrate --no-input
-python manage.py collectstatic --no-input
-python manage.py createsuperuser --username 'admin' --email 'admin@admin.com' --noinput
