@@ -46,7 +46,6 @@ coverage.xml
 
 # Developers
 *.sw*
-manage.py
 .DS_Store
 
 # example database
@@ -54,3 +53,4 @@ drf_example
 /db.sqlite3
 /mediafiles
 /nginx/secret_website_frontend/src/private/api_data.ts
+/nginx/secret_website_frontend/node_modules
