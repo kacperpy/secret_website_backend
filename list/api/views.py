@@ -1,13 +1,14 @@
+from datetime import datetime
 from io import BytesIO
-from rest_framework import mixins, viewsets
-from list.api.serializers import MovieReadSerializer
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework import status
+
 import requests
 from django.core.files.uploadedfile import UploadedFile
+from rest_framework import generics, mixins, status, viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from list.api.serializers import MovieReadSerializer
 from list.models import Movie
-from datetime import datetime
 
 
 class MovieViewSet(mixins.RetrieveModelMixin,
@@ -20,6 +21,8 @@ class MovieViewSet(mixins.RetrieveModelMixin,
     lookup_field = 'uuid'
 
     def perform_create(self, serializer):
+        user_request = self.request.user
+        room = user_request.room
         image_url = serializer.validated_data.get('image_url')
         image_file_name = f"{serializer.validated_data.get('title')}_{datetime.now()}.jpg"
 
@@ -27,5 +30,18 @@ class MovieViewSet(mixins.RetrieveModelMixin,
         if image_response.status_code != 200:
             return Response({'error': 'Failed to download image'}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer.save(image_file=UploadedFile(
-            BytesIO(image_response.content), name=image_file_name))
+        serializer.save(
+            image_file=UploadedFile(
+                BytesIO(image_response.content), name=image_file_name),
+            origin_room=room
+        )
+
+
+class UserMoviesListAPIView(generics.ListAPIView):
+    serializer_class = MovieReadSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        request_user = self.request.user
+        request_room = request_user.room
+        return request_room.movies.all()
