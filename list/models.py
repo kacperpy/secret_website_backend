@@ -1,5 +1,20 @@
-from django.db import models
 import uuid
+
+from django.db import models
+
+
+class Room(models.Model):
+    uuid = models.UUIDField(
+        db_index=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    name = models.CharField(
+        max_length=16
+    )
+
+    def __str__(self):
+        return self.name
 
 
 class Movie(models.Model):
@@ -7,6 +22,11 @@ class Movie(models.Model):
         db_index=True,
         default=uuid.uuid4,
         editable=False
+    )
+    origin_room = models.ForeignKey(
+        Room,
+        related_name='movies',
+        on_delete=models.CASCADE
     )
     title = models.CharField(
         max_length=1028

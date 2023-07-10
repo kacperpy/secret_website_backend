@@ -11,6 +11,7 @@ class MovieReadSerializer(serializers.ModelSerializer):
         model = Movie
         fields = [
             'uuid',
+            'origin_room',
             'title',
             'description',
             'description_long',
