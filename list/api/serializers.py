@@ -17,6 +17,7 @@ class MovieReadSerializer(serializers.ModelSerializer):
             'description_long',
             'image_url',
             'image_file',
+            'is_active',
             'created_at',
         ]
 
