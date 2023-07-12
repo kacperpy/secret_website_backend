@@ -1,10 +1,11 @@
 import {
   Box,
-  Button,
+  // Button,
   Card,
-  CardActions,
+  // CardActions,
   CardContent,
   CardMedia,
+  Divider,
   Typography,
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -18,6 +19,21 @@ interface ItemScrollableListProps {
 }
 
 const MAX_CARDS = 5;
+
+const arrowSxActive = {
+  color: "var(--text-primary)",
+  fontSize: "3rem",
+  cursor: "pointer",
+  transition: "color 0.1s ease",
+  "&:hover": {
+    color: "var(--text-primary-hover)",
+  },
+};
+
+const arrowSxInactive = {
+  color: "var(--text-primary-disabled)",
+  fontSize: "3rem",
+};
 
 export const ItemScrollableList = ({ movies }: ItemScrollableListProps) => {
   const [startIndex, setStartIndex] = useState(0);
@@ -35,22 +51,13 @@ export const ItemScrollableList = ({ movies }: ItemScrollableListProps) => {
   const visibleMovies = movies.slice(startIndex, startIndex + MAX_CARDS);
   return (
     <Box display="flex" flexDirection="row" gap="2rem" alignItems="center">
-      {startIndex > 0 && (
-        <ArrowBackIosIcon
-          onClick={handleScrollLeft}
-          sx={{
-            position: "fixed",
-            left: "8rem",
-            color: "var(--text-primary)",
-            fontSize: "3rem",
-            cursor: "pointer",
-            transition: "color 0.1s ease",
-            "&:hover": {
-              color: "var(--text-primary-hover)",
-            },
-          }}
-        />
-      )}
+      {/* {startIndex > 0 && (
+        
+      )} */}
+      <ArrowBackIosIcon
+        onClick={handleScrollLeft}
+        sx={startIndex > 0 ? arrowSxActive : arrowSxInactive}
+      />
       {visibleMovies.map((item, index) => (
         <Card
           key={index}
@@ -85,17 +92,18 @@ export const ItemScrollableList = ({ movies }: ItemScrollableListProps) => {
                 {item.title}
               </Typography>
             </Link>
+            <Divider style={{ width: "90%", marginBottom: "0.7rem" }} />
             <Typography
               variant="body2"
               color="var(--text-primary)"
               textAlign="start"
-              height={60}
+              height={100}
               overflow="auto"
             >
               {item.description}
             </Typography>
           </CardContent>
-          <CardActions>
+          {/* <CardActions>
             <Button
               variant="contained"
               sx={{
@@ -108,25 +116,20 @@ export const ItemScrollableList = ({ movies }: ItemScrollableListProps) => {
             >
               Mark as seen
             </Button>
-          </CardActions>
+          </CardActions> */}
         </Card>
       ))}
-      {startIndex + MAX_CARDS < movies.length && (
-        <ArrowForwardIosIcon
-          onClick={handleScrollRight}
-          sx={{
-            position: "fixed",
-            right: "8rem",
-            color: "var(--text-primary)",
-            fontSize: "3rem",
-            cursor: "pointer",
-            transition: "color 0.1s ease",
-            "&:hover": {
-              color: "var(--text-primary-hover)",
-            },
-          }}
-        />
-      )}
+      {/* {startIndex + MAX_CARDS < movies.length && (
+        
+      )} */}
+      <ArrowForwardIosIcon
+        onClick={handleScrollRight}
+        sx={
+          startIndex + MAX_CARDS < movies.length
+            ? arrowSxActive
+            : arrowSxInactive
+        }
+      />
     </Box>
   );
 };

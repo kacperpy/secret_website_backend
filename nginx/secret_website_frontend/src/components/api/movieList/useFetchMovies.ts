@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MovieItem } from "../openAi/types";
+import { MOVIE_API_ADRESS } from "../api";
 
 export const useFetchMovies = () => {
   const [isLoadingMovies, setIsLoadingMovies] = useState(false);
@@ -13,6 +14,7 @@ export const useFetchMovies = () => {
       image_url: "",
       image_file: "",
       created_at: "",
+      is_active: false,
     },
   ]);
 
@@ -20,7 +22,7 @@ export const useFetchMovies = () => {
     setIsLoadingMovies(true);
     console.log("\nFETCHING MOVIES...\n");
     axios
-      .get("http://46.41.149.244/api/user-movies/", {
+      .get(`http://${MOVIE_API_ADRESS}/api/user-active-movies/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("user_auth_token")}`,

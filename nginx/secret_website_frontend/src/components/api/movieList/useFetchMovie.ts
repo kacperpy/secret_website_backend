@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { MovieItem } from "../openAi/types";
+import { MOVIE_API_ADRESS } from "../api";
 
 export const useFetchMovie = () => {
   const [isLoadingMovie, setIsLoadingMovie] = useState(false);
@@ -8,9 +9,9 @@ export const useFetchMovie = () => {
 
   const fetchMovie = (uuid: string) => {
     setIsLoadingMovie(true);
-    console.log("\nFETCHING MOVIES...\n");
+    console.log("\nFETCHING MOVIE...\n");
     axios
-      .get(`http://46.41.149.244/api/movies/${uuid}/`, {
+      .get(`http://${MOVIE_API_ADRESS}/api/movies/${uuid}/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("user_auth_token")}`,
@@ -22,7 +23,7 @@ export const useFetchMovie = () => {
         setMovie(movie);
       })
       .catch((error: any) => {
-        console.error("Error fetching movie details:", error);
+        console.error("Error fetching movie:", error);
       })
       .finally(() => {
         setIsLoadingMovie(false);
