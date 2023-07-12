@@ -30,6 +30,9 @@ class Movie(models.Model):
         null=True,
         blank=True
     )
+    is_active = models.BooleanField(
+        default=True
+    )
     title = models.CharField(
         max_length=1028
     )
