@@ -6,6 +6,8 @@ from django.core.files.uploadedfile import UploadedFile
 from rest_framework import generics, mixins, status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.generics import get_object_or_404
 
 from list.api.serializers import MovieReadSerializer
 from list.models import Movie
@@ -46,3 +48,28 @@ class UserMoviesListAPIView(generics.ListAPIView):
         request_user = self.request.user
         request_room = request_user.room
         return request_room.movies.all()
+
+
+class UserActiveMoviesListAPIView(generics.ListAPIView):
+    serializer_class = MovieReadSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        request_user = self.request.user
+        request_room = request_user.room
+        return request_room.movies.filter(is_active=True)
+
+
+class RemoveFromWatchlistAPIView(APIView):
+    serializer_class = MovieReadSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, uuid):
+        movie_request = get_object_or_404(Movie, uuid=uuid)
+        movie_request.is_active = False
+        movie_request.save()
+
+        return Response(
+            "Movie has been successfully removed from watchlist.",
+            status=status.HTTP_200_OK
+        )

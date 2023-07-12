@@ -3,7 +3,7 @@ from django.urls import include, path
 
 from rest_framework.routers import DefaultRouter
 
-from list.api.views import MovieViewSet
+from list.api.views import MovieViewSet, RemoveFromWatchlistAPIView, UserActiveMoviesListAPIView
 from list.api.views import UserMoviesListAPIView
 
 router = DefaultRouter()
@@ -16,6 +16,16 @@ urlpatterns = [
     path(
         "user-movies/",
         UserMoviesListAPIView.as_view(),
-        name="user-movie-list"
+        name="user-movie-list-all"
+    ),
+    path(
+        "user-active-movies/",
+        UserActiveMoviesListAPIView.as_view(),
+        name="user-movie-list-active"
+    ),
+    path(
+        "movies/<uuid:uuid>/remove-from-watchlist/",
+        RemoveFromWatchlistAPIView.as_view(),
+        name="movie-remove-from-watchlist"
     )
 ]
