@@ -1,10 +1,10 @@
 from django.db import router
 from django.urls import include, path
-
 from rest_framework.routers import DefaultRouter
 
-from list.api.views import MovieViewSet, RemoveFromWatchlistAPIView, UserActiveMoviesListAPIView
-from list.api.views import UserMoviesListAPIView
+from list.api.views import (AddToWatchlistAPIView, MovieViewSet,
+                            RemoveFromWatchlistAPIView,
+                            UserActiveMoviesListAPIView, UserMoviesListAPIView)
 
 router = DefaultRouter()
 router.register(r'movies', MovieViewSet, basename='movies')
@@ -30,7 +30,7 @@ urlpatterns = [
     ),
     path(
         "movies/<uuid:uuid>/add-to-watchlist/",
-        RemoveFromWatchlistAPIView.as_view(),
+        AddToWatchlistAPIView.as_view(),
         name="movie-add-to-watchlist"
     )
 ]
