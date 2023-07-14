@@ -9,8 +9,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
-from list.api.serializers import MovieReadSerializer
-from list.models import Movie
+from list.api.serializers import CommentCreateSerializer, CommentReadSerializer, MovieCreateSerializer, MovieReadSerializer
+from list.models import Comment, Movie
 
 
 class MovieViewSet(mixins.RetrieveModelMixin,
@@ -59,7 +59,7 @@ class UserActiveMoviesListAPIView(generics.ListAPIView):
         return request_room.movies.filter(is_active=True)
 
 
-class RemoveFromWatchlistAPIView(APIView):
+class RemoveFromWatchListAPIView(APIView):
     serializer_class = MovieReadSerializer
     permission_classes = [IsAuthenticated]
 
@@ -86,4 +86,26 @@ class AddToWatchlistAPIView(APIView):
         return Response(
             "Movie has been successfully added to watchlist.",
             status=status.HTTP_200_OK
+        )
+
+
+class MovieCommentsListAPIView(generics.ListAPIView):
+    serializer_class = CommentReadSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        request_movie = get_object_or_404(Movie, uuid=self.kwargs.get('uuid'))
+        return request_movie.comments.all()
+
+
+class MovieCreateCommentAPIView(generics.CreateAPIView):
+    serializer_class = CommentCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        movie_request = get_object_or_404(Movie, uuid=self.kwargs.get('uuid'))
+        request_user = self.request.user
+        serializer.save(
+            movie=movie_request,
+            created_by=request_user
         )
