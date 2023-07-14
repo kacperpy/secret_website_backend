@@ -27,5 +27,10 @@ urlpatterns = [
         "movies/<uuid:uuid>/remove-from-watchlist/",
         RemoveFromWatchlistAPIView.as_view(),
         name="movie-remove-from-watchlist"
+    ),
+    path(
+        "movies/<uuid:uuid>/add-to-watchlist/",
+        RemoveFromWatchlistAPIView.as_view(),
+        name="movie-add-to-watchlist"
     )
 ]
