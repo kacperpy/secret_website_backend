@@ -72,3 +72,18 @@ class RemoveFromWatchlistAPIView(APIView):
             "Movie has been successfully removed from watchlist.",
             status=status.HTTP_200_OK
         )
+
+
+class AddToWatchlistAPIView(APIView):
+    serializer_class = MovieReadSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, uuid):
+        movie_request = get_object_or_404(Movie, uuid=uuid)
+        movie_request.is_active = True
+        movie_request.save()
+
+        return Response(
+            "Movie has been successfully added to watchlist.",
+            status=status.HTTP_200_OK
+        )
